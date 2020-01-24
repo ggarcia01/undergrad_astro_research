@@ -182,18 +182,12 @@ def splitting_data(dataframe):
         back_index = len(remaining_usrid_lst) - reversed_remaining_usrid_lst.index(element)
         temp_df = dataframe.iloc[front_index:back_index,:]
         empty_df_w_col_names = pd.concat([empty_df_w_col_names,temp_df])
-        df_lines = pd.DataFrame([['-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-']],columns=columns_lst)
+        seperator_row = dataframe.shape[1]*['-']
+        df_lines = pd.DataFrame([seperator_row],columns=columns_lst)
         empty_df_w_col_names = empty_df_w_col_names.append(df_lines)
-        '''
-        for i in range(temp_df.shape[0]):
-            empty_df_w_col_names = pd.concat([empty_df_w_col_names,temp_df])
-            df_lines = pd.DataFrame([['-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-']],columns=columns_lst)
-            empty_df_w_col_names = empty_df_w_col_names.append(df_lines)
-        '''
     return empty_df_w_col_names
 
 split_multiple_matches = splitting_data(multiple_matches)
-#print(split_multiple_matches)
 split_multiple_matches.to_csv('../ets_rass_csc_matches/split_multiple_matches.csv',index=False)
 
 
