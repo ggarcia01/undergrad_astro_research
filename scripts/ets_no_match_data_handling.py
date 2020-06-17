@@ -1,20 +1,21 @@
 '''
 garcia, gil
-research script 1 of 7
-created: 1/17/2020
-last updated: 3/5/2020
+research script 2 of 7
 
-purpose: takes 2sigma catalog data and gives each row a usrid and a normalized offset value
+created: 3/5/2020
+last updated 3/5/2020
 
+purpose: adds a usrid and a offset value to the "no match sources" (ETS sources that did
+not have a RASS counterpart)
 '''
 
 
 
+import numpy as np
+import matplotlib.pyplot as plt
 import pandas as pd
 
-df = pd.read_csv('../ets_rass_matches_files/match_theta_copy.csv')
-size_before = df.shape
-
+df = pd.read_csv('../ets_rass_matches_files/no_match_theta.csv')
 
 #creating a usrid column (setting up an inner join)
 usrid_lst =[]
@@ -22,10 +23,6 @@ for i in range(df.shape[0]):
     usrid_lst += [i+1]
 df['usrid'] = usrid_lst
 
-#normalized offset restriction: only want sources w norm_offset < 1.4
-restriction1 = df['normalized_offset'] < 1.4
-df = df[restriction1]
-size_after = df.shape
 
 def ets_offsets_from_snr(dataframe,snr_column):
     offset = []
@@ -45,6 +42,4 @@ def ets_offsets_from_snr(dataframe,snr_column):
 df = ets_offsets_from_snr(df,'ets_snr')
 
 
-#overwrite the data file:
-df.to_csv('../ets_rass_matches_files/match_theta_copy.csv',index=False)
-print('done.')
+df.to_csv('../ets_rass_matches_files/no_match_theta.csv',index=False)
